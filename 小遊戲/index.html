@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- 韓文母音 ㅏㅑㅓㅕㅗㅛㅜㅠㅡㅣ -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <title>Document</title>
+  <style>
+    @font-face {
+      font-family: 'CursedTimerUlil-Aznm';
+      src: url('./fonts/CursedTimerUlil-Aznm.ttf') format('woff'),
+        url('./fonts/CursedTimerUlil-Aznm.eot') format("truetype"),
+        url('./fonts/CursedTimerUlil-Aznm.woff') format("embedded-opentype");
+    }
+
+    @font-face {
+      font-family: 'jf-openhuninn-1.1';
+      src: url('./fonts/jf-openhuninn-1.1.woff') format('woff'),
+        url('./fonts/jf-openhuninn-1.1.ttf') format("truetype"),
+        url('./fonts/jf-openhuninn-1.1.eot') format("embedded-opentype");
+    }
+
+    body {
+      background-color: rgb(247, 245, 216);
+    }
+
+    .content {
+      width: 90vw;
+      height: 90vh;
+      display: flex;
+      margin: auto;
+      justify-content: space-around;
+      overflow: hidden;
+    }
+
+    #scoreboard {
+      height: 550px;
+      width: 300px;
+      /* background-color: aqua; */
+      font-size: 30px;
+      font-family: 'jf-openhuninn-1.1';
+      text-align: center;
+      /* float: left; */
+    }
+
+    #game {
+      width: 600px;
+      height: 550px;
+      background-image: url('../素材/黑板背景_工作區域\ 1.png');
+      background-size: 600px 550px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      overflow: hidden;
+      position: relative;
+      /* cursor: url(../素材/imgs/kiss_PNG85774.png) 50 50, auto; */
+    }
+
+
+    .title {
+      width: 500px;
+      height: auto;
+      position: absolute;
+      left: 50px;
+    }
+
+    img {
+      height: 150px;
+      position: absolute;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    #btn-start {
+
+      width: 500px;
+      height: 200px;
+      border: 0px;
+      position: absolute;
+      top: 60%;
+      left: 8%;
+      z-index: 1;
+      background: transparent;
+    }
+
+    #btn-start img {
+      width: 500px;
+      height: auto;
+      position: absolute;
+      top: -24px;
+      left: 7px;
+    }
+
+    #btn-start::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      bottom: 0;
+      right: 0;
+      left: 5px;
+      background: url('../素材/標題-hover.png') no-repeat;
+      /* transform: scale(0); */
+      transition: all .2s;
+      opacity: 0;
+    }
+
+    /* 
+      transform: translateY(0px);
+    }*/
+
+
+    #btn-start:hover::before {
+      opacity: 0.4;
+      /* transform: scaleX(1); */
+    }
+
+
+    .kiss {
+      /* 忽略點擊事件 */
+      pointer-events: none;
+      width: 10%;
+      height: 10%;
+    }
+
+    .swal2-icon-content {
+      font-family: 'Montserrat';
+    }
+
+    #right {
+      height: 550px;
+      width: 300px;
+      /* background-color: pink; */
+    }
+
+    #recordboard {
+      width: 300px;
+      height: 325px;
+      /* background-color: rgb(65, 149, 149); */
+      font-family: 'jf-openhuninn-1.1';
+      font-size: 30px;
+      margin-left: 50px;
+    }
+
+    #doremi {
+      float: left;
+      width: 225px;
+      height: 225px;
+      /* background-color: powderblue; */
+    }
+
+    #doremi img {
+      width: 225px;
+      height: auto;
+    }
+
+    #text-time,
+    #text-score,
+    #intro {
+      font-family: 'jf-openhuninn-1.1';
+      font-size: 40px;
+      color: rgb(217, 135, 173);
+    }
+
+    #intro {
+      width: 150px;
+      font-size: 20px;
+      position: absolute;
+      right: 80px;
+      bottom: 220px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #FFF;
+    }
+
+    #intro::before {
+      content: "";
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      border-radius: 2px;
+      top: 148px;
+      left: 8px;
+      bottom: 0;
+      right: 0;
+      background: #FFF;
+      rotate: 60deg;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="content">
+    <br>
+
+    <div id="scoreboard">
+      <p>分數: <span id="text-score">0</span> 分</p>
+      <p>剩餘: <span class="time-decortion"></span><span id="text-time">0</span> 秒</p>
+      <!-- <img src="https://picsum.photos/300/200/?random=10"> -->
+
+    </div>
+    <div id="game">
+
+      <img src="../素材/主標題(字)_工作區域 1.png" class="title">
+      <button id="btn-start"><img src="../素材/start_工作區域 1.png"></button>
+
+    </div>
+    <div id="right">
+      <div id="recordboard">
+        <p>最高玩家: <span id="text-highscorename">沒有</span></p>
+        <p>最高分: <span id="text-highscore">0</span> 分</p>
+
+      </div>
+      <div id="doremi"><img src="../素材/Doremi(介紹).gif"></div>
+      <div id="intro">
+        <p>追愛要勇敢，看到帥哥我們就勇敢追(親)下去吧！</p>
+      </div>
+    </div>
+
+
+  </div>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js'
+    integrity='sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=='
+    crossorigin='anonymous'></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // 分數
+    let score = 0
+    // 剩餘秒數
+    let countdown = 0
+    // 計時器
+    let timer = 0
+    // 最高分
+    // const storage = JSON.parse(localStorage.getItem('zombiegame'))
+    const highscore = localStorage.zombiegame ? JSON.parse(localStorage.zombiegame) : { name: '', score: 0 }
+    $('#text-highscorename').text(highscore.name)
+    $('#text-highscore').text(highscore.score)
+
+    // function:隨機取數
+    function getRandomWord(x) {
+      return Math.floor(Math.random() * x)
+    }
+    // function:移動
+    function move(boy) {
+      const top = Math.round(Math.random() * 100) + '%'
+      const left = Math.round(Math.random() * 100) + '%'
+      boy.stop().animate({ top, left }, 2000, function () {
+        if ($('#btn-start').attr('disabled') === 'disabled') {
+          move(boy)
+        }
+      })
+    }
+
+    $('#btn-start').click(function () {
+      // 停用開始按鈕
+      // $(this).attr('disabled', true)
+
+      // 開始按鈕 消失
+      $('#btn-start').hide();
+      $('.title').hide();
+
+      // 重設
+      score = 0
+      $('#text-score').text(score)
+      countdown = 20
+      $('#text-time').text(countdown)
+
+      // 開始遊戲
+      timer = setInterval(function () {
+        // 倒數
+        countdown--
+        $('#text-time').text(countdown)
+
+        const random = Math.ceil(Math.random() * 10)
+
+        if (random > 5 && $('.coolboy').length < 5) {
+          const top = Math.round(Math.random() * 100) + '%'
+          const left = Math.round(Math.random() * 100) + '%'
+          const coolboy = $(`<img src="../素材/imgs/luca.gif" class="coolboy" style="top: ${top}; left: ${left}">`)
+          $('#game').append(coolboy)
+          move(coolboy)
+        }
+        if (random > 7 && $('.cuteboy').length < 5) {
+          const top = Math.round(Math.random() * 100) + '%'
+          const left = Math.round(Math.random() * 100) + '%'
+          const cuteboy = $(`<img src="../素材/imgs/vox.gif" class="cuteboy" style="top: ${top}; left: ${left}">`)
+          $('#game').append(cuteboy)
+          move(cuteboy)
+        }
+
+        if (random > 2 && $('.ugly').length < 7) {
+          const top = Math.round(Math.random() * 100) + '%'
+          const left = Math.round(Math.random() * 100) + '%'
+          const ugly = $(`<img src="../素材/imgs/ugly.png" class="ugly" style="top: ${top}; left: ${left}">`)
+          $('#game').append(ugly)
+          move(ugly)
+          setTimeout(() => {
+            $('.ugly').remove()
+          }, 5000);
+        }
+
+        // 時間到
+        if (countdown === 0) {
+          // 停止倒數
+          clearInterval(timer)
+          // 清空
+          $('#game img').remove()
+          // 重新啟用開始按鈕
+          $('#btn-start').attr('disabled', false)
+
+          if (score > highscore.score) {
+            Swal.fire({
+              icon: 'info',
+              title: '時間到',
+              text: `最高分，你得到 ${score} 分`,
+              inputPlaceholder: '請輸入名字',
+              input: 'text',
+              inputAttributes: {
+                required: true
+              },
+              validationMessage: '名稱必填',
+              allowOutsideClick: false,
+              allowEscapeKey: false
+            }).then(result => {
+              highscore.score = score
+              highscore.name = result.value
+              $('#text-highscorename').text(highscore.name)
+              $('#text-highscore').text(highscore.score)
+
+              localStorage.setItem('zombiegame', JSON.stringify(highscore))
+              localStorage.zombiegame = JSON.stringify(highscore)
+            })
+          } else {
+            Swal.fire({
+              icon: 'info',
+              title: '時間到',
+              text: `你得到 ${score} 分`
+            })
+          }
+        }
+      }, 1000)
+    })
+
+    $('#game').on('click', '.coolboy', function () {
+      $(this).attr('src', '../素材/imgs/kiss_PNG85774.png')
+      $(this).removeClass('coolboy').addClass('kiss')
+      $(this).stop()
+      score += 50
+      $('#text-score').text(score)
+
+      setTimeout(() => {
+        $('.kiss').remove()
+      }, 3000);
+    })
+    $('#game').on('click', '.cuteboy', function () {
+      $(this).attr('src', '../素材/imgs/kiss_PNG85774.png')
+      $(this).removeClass('cuteboy').addClass('kiss')
+      $(this).stop()
+      score += 80
+      $('#text-score').text(score)
+
+      setTimeout(() => {
+        $('.kiss').remove()
+      }, 3000);
+    })
+    $('#game').on('click', '.ugly', function () {
+      $(this).attr('src', '../素材/imgs/kiss_PNG85774.png')
+      $(this).removeClass('ugly').addClass('kiss')
+      $(this).stop()
+      score -= 300
+      $('#text-score').text(score)
+
+      setTimeout(() => {
+        $('.kiss').remove()
+        // $('.ugly').remove()
+      }, 8000);
+    })
+  </script>
+</body>
+
+</html>
